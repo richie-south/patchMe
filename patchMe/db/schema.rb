@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161007181008) do
+ActiveRecord::Schema.define(version: 20161015212127) do
 
   create_table "forms", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name",        limit: 50,                                  null: false
     t.string   "description", limit: 500
     t.integer  "nr_of_items",                                             null: false
-    t.string   "image_name",  limit: 50,  default: "noImage"
-    t.datetime "open_time",               default: '2016-10-07 18:22:24'
+    t.string   "image_name",  limit: 50,  default: "default"
+    t.datetime "open_time",               default: '2016-10-15 22:42:20'
     t.datetime "close_time",                                              null: false
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
@@ -29,15 +29,30 @@ ActiveRecord::Schema.define(version: 20161007181008) do
     t.integer  "form_id"
     t.string   "value",       limit: 500, null: false
     t.string   "description", limit: 250, null: false
+    t.string   "name",        limit: 50,  null: false
     t.integer  "type",                    null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
 
+  create_table "logins", force: :cascade do |t|
+    t.string   "identification",          null: false
+    t.string   "password_digest"
+    t.string   "oauth2_token",            null: false
+    t.string   "uid"
+    t.string   "single_use_oauth2_token"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "picture"
+    t.string   "name"
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string   "name",       limit: 50, null: false
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.string   "fb_id",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

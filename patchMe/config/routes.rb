@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+
+  resources :users, only: [:show, :create] do
+    resources :forms, only: [:show, :create, :index, :update]
+  end
+
+  get 'form_by_name_and_id' => 'forms#form_by_name_and_id', as: :show
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -53,17 +60,4 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
-  namespace :api, defaults: { format: :json } do
-    scope module: :v1, constrains: ApiConstraints.new(version: 1, default: true) do
-
-      resources :users, only: [:show, :index, :create, :new, :destroy, :update] do
-        resources :forms, only: [:index]
-      end
-
-      resources :form, only: [:show, :index, :create, :new, :destroy, :update]
-    end
-  end
-
-
 end
