@@ -21,13 +21,12 @@ class UsersController < ApplicationController
     if user.nil?
       render json: { errors: "User not found"}, status: :not_found
     else
-      form = Form.find_by_id_and_user_id(params[:id], user.id)
+      form = Form.find_by(id: params[:id], user_id: user.id)
       if form.nil?
         render json: { errors: "Form not found"}, status: :not_found
       else
         render json: { form: form }, status: :success
       end
-
     end
   end
 
