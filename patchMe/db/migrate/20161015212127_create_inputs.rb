@@ -7,6 +7,7 @@ class CreateInputs < ActiveRecord::Migration
       t.string :description, limit: 250, null: false
       t.string :name, limit: 50, null: false
 
+      t.integer :position, null: false
       t.integer :type, in: 1..3, null: false
 
       t.timestamps null: false
