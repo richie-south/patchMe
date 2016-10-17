@@ -15,7 +15,7 @@ class FormsList extends Component {
     const formBoxes = [];
     for (var i = 0; i < 3; i++) {
       formBoxes.push(
-        (<div className="column is-3">
+        (<div key={i} className="column is-3">
           {this.getFormBox()}
         </div>));
     }
