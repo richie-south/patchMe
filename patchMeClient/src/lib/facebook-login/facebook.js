@@ -42,7 +42,7 @@ class FacebookLogin extends Component {
 
   render() {
     return (
-      <button
+      <button className="button is-info"
         onClick={this.click.bind(this)}
       >
         Login with Facebook
