@@ -3,3 +3,23 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.formSize{
+  width: 164px;
+}
+
+.formMedia {
+  margin-bottom: 0px !important;
+}
+
+.formContent{
+  padding: 10px;
+}
+
+.newFormIcon.icon:first-child {
+  margin-right: 0px;
+}
+
+.newFormIcon.icon {
+  font-size: 16px;
+}
