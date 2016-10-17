@@ -2,20 +2,26 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-//import FacebookLogin from 'react-facebook-login';
-import FacebookLogin from './lib/facebook-login/app';
+
 import {getBearerToken, getUser, createUser} from './utils/user';
+import {getFromLocalstorage, saveToLocalstorage} from './utils/localstorage';
+import LoginPage from './pages/Login';
+import UserOverview from './pages/UserOverview';
 import co from 'co';
+const userObjectKey = 'userObject';
+const bearerTokenKey = 'bearerToken';
 
 class App extends Component {
   constructor(props){
     super(props);
 
+    const userObject = JSON.parse(getFromLocalstorage(userObjectKey));
+    const bearerToken = getFromLocalstorage(bearerTokenKey);
+    console.log(userObject);
     this.state = {
-      userObject: null,
-      bearerToken: null
+      userObject: userObject ? userObject : null,
+      bearerToken: bearerToken ? bearerToken : null
     };
-
   }
 
   fbLoginCallback(oauthCode){
@@ -27,36 +33,34 @@ class App extends Component {
         userObject = yield getUser(bearerToken);
       }
 
+      // TODO: set time on object and check if valid!
+      saveToLocalstorage(userObjectKey, JSON.stringify(userObject));
+      saveToLocalstorage(bearerTokenKey, bearerToken);
       this.setState({ bearerToken });
       this.setState({ userObject });
-      console.log(userObject);
+
     }.bind(this))
     .catch(e => {
       console.log('error', e);
       // TODO: server error message
     });
-
-    console.log(oauthCode);
   }
-  // "dist/facebook-login.js"
+
+  renderLoginPage(){
+    return (<LoginPage callback={this.fbLoginCallback.bind(this)}></LoginPage>);
+  }
+
+  renderUserPage(){
+    return (<UserOverview userObject={this.state.userObject} bearerToken={this.state.bearerToken}></UserOverview>);
+  }
+
   render() {
-    return (
-      <div className="App">
-        <FacebookLogin
-          callback={this.fbLoginCallback.bind(this)}
-        />
-      </div>
-    );
+    // TODO: compare time
+    if(this.state.userObject !== null && this.state.bearerToken !== null){
+      return this.renderUserPage();
+    }
+    return this.renderLoginPage();
   }
 }
 
 export default App;
-
-/*
-<FacebookLogin
-  appId="701349320027819"
-  autoLoad={true}
-  fields="name,email,picture"
-  onClick={this.fbLoginClick.bind(this)}
-  callback={this.fbLoginCallback.bind(this)} />
- */
