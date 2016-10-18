@@ -1,5 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import co from 'co';
 import '../index.css';
 
@@ -15,7 +16,7 @@ class FormsList extends Component {
     const formBoxes = [];
     for (var i = 0; i < 3; i++) {
       formBoxes.push(
-        (<div key={i} className="column is-3">
+        (<div key={i} className="column is-narrow">
           {this.getFormBox()}
         </div>));
     }
@@ -43,8 +44,8 @@ class FormsList extends Component {
           </div>
         </div>
         <footer className="card-footer">
-          <a className="card-footer-item">Edit</a>
-          <a className="card-footer-item">Responses</a>
+          <a className="button is-success is-inverted card-footer-item">Edit</a>
+          <a className="button is-success is-inverted card-footer-item">Responses</a>
         </footer>
       </div>
     );
@@ -56,17 +57,19 @@ class FormsList extends Component {
       <div>
         <h1 id="forms" className="title">Forms</h1>
         <div className="tabs">
-        <ul>
-          <li><a className="button is-small is-success">
-            <span className="icon newFormIcon">
-              <i className="fa fa-plus-circle" aria-hidden="true"></i>
-            </span>
-            <span>Create new</span>
-          </a></li>
-        </ul>
-      </div>
+          <ul>
+            <li>
+              <Link className="button is-small is-success" to="/newForm">
+                <span className="icon newFormIcon">
+                  <i className="fa fa-plus-circle" aria-hidden="true"></i>
+                </span>
+                <span>Create new</span>
+              </Link>
+            </li>
+          </ul>
+        </div>
 
-        <div className="columns is-multiline">
+        <div className="columns is-mobile is-multiline">
           {this.renderFormBoxes()}
         </div>
       </div>
