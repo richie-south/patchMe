@@ -7,10 +7,22 @@ import { InputShortText, InputLongText } from './InputOptions';
 class InputOptionsList extends Component {
   constructor(props){
     super(props);
+
+    this.InputOptions = {
+      shortText: {
+        description: '',
+        type: 'text_line'
+      },
+
+      longText: {
+        description: '',
+        type: 'text_block'
+      }
+    };
   }
 
-  itemPress(item){
-    this.props.onItemPress(item);
+  itemPress(element, shell){
+    this.props.onItemPress(element, shell);
   }
 
   render() {
@@ -19,10 +31,9 @@ class InputOptionsList extends Component {
     }
 
     return (
-
       <table className="table">
         <tbody>
-          <tr onClick={this.itemPress.bind(this)}>
+          <tr onClick={this.itemPress.bind(this, InputShortText, this.InputOptions.shortText)}>
             <td className="is-icon">
               <a>
                 <i className="fa fa-align-left"></i>
@@ -30,7 +41,7 @@ class InputOptionsList extends Component {
             </td>
             <td>Short answer</td>
           </tr>
-          <tr onClick={this.itemPress.bind(this)}>
+          <tr onClick={this.itemPress.bind(this, InputLongText, this.InputOptions.longText)}>
             <td className="is-icon">
               <a>
                 <i className="fa fa-align-left"></i>
@@ -40,7 +51,6 @@ class InputOptionsList extends Component {
           </tr>
         </tbody>
       </table>
-
     );
   }
 }
