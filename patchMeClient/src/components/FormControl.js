@@ -1,33 +1,44 @@
 'use strict';
+import React, { Component } from 'react';
 
-import React, { PropTypes } from 'react';
+export class FormControl extends Component {
+  constructor(props){
+    super(props);
+  }
 
-const FormControl = ({ Element }) => (
-  <div className="notification formControl">
-    <article className="media">
-      <div className="media-left">
-        <nav className="level">
-          <div className="level-left">
-            <a className="level-item">
-              <span className="icon is-small is-success"><i className="fa fa-arrow-down" aria-hidden="true"></i></span>
-            </a>
-            <a className="level-item">
-              <span className="icon is-small"><i className="fa fa-arrow-up" aria-hidden="true"></i></span>
-            </a>
+  onFocus(event){
+    this.props.setElementFocus(this._formControl);
+  }
+
+  handleChange(id, event){
+    this.props.update(id, event.target.value);
+  }
+
+  render() {
+    const Element = this.props.Element;
+    return (
+      <div className="notification formControl"
+        ref={(c) => { this._formControl = c; }}
+        id={this.props.fcId}>
+        <article className="media">
+          <div className="media-left">
+            <p onClick={this.props.moveUp.bind(null, this.props.fcId)}><a><i className="fa fa-arrow-up" aria-hidden="true"></i></a></p>
+            <p onClick={this.props.moveDown.bind(null, this.props.fcId)}><a><i className="fa fa-arrow-down" aria-hidden="true"></i></a></p>
           </div>
-        </nav>
+          <div className="media-content">
+            { React.cloneElement(<Element/>, {
+                update: this.props.update,
+                onFocus: this.onFocus.bind(this),
+                fcId: this.props.fcId
+              })}
+          </div>
+          <div className="media-right">
+            <button onClick={this.props.remove.bind(null, this.props.fcId)} className="delete"></button>
+          </div>
+        </article>
       </div>
-      <div className="media-content">
-        <Element />
-      </div>
-      <div className="media-right">
-        <button className="delete"></button>
-      </div>
-    </article>
-  </div>
-);
-
-FormControl.propTypes = {
-  Element: PropTypes.element.isRequired
+    );
+  }
 }
+
 export default FormControl;
