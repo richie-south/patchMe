@@ -1,5 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
+import { InputHeaderTitle, InputHeaderDescription } from './InputOptions';
 
 export class FormControl extends Component {
   constructor(props){
@@ -42,3 +43,36 @@ export class FormControl extends Component {
 }
 
 export default FormControl;
+
+export class InputHeader extends Component {
+  constructor(props){
+    super(props);
+  }
+
+  render() {
+    return (
+      <div className="notification formControl">
+        <article className="media">
+          <div className="media-left">
+          </div>
+          <div className="media-content">
+            <div className="content has-text-centered">
+              <p>
+                <InputHeaderTitle
+                  removeOldFocus={this.props.removeOldFocus}
+                  update={this.props.updateTitle} />
+              </p>
+              <p>
+                <InputHeaderDescription
+                  removeOldFocus={this.props.removeOldFocus}
+                  update={this.props.updateDescription} />
+              </p>
+            </div>
+          </div>
+          <div className="media-right">
+          </div>
+        </article>
+      </div>
+    );
+  }
+}
