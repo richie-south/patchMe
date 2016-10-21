@@ -1,26 +1,50 @@
 'use strict';
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 
-export const InputHeader = () => (
-  <div className="notification formControl">
-    <article className="media">
-      <div className="media-left">
-      </div>
-      <div className="media-content">
-        <div className="content has-text-centered">
-          <p>
-            <input className="input is-large formTitle" type="text" placeholder="Untitled form" />
-          </p>
-          <p>
-            <textarea className="textarea formDescription" placeholder="From description"></textarea>
-          </p>
-        </div>
-      </div>
-      <div className="media-right">
-      </div>
-    </article>
-  </div>
-);
+export class InputHeaderTitle extends Component {
+  constructor(props){
+    super(props);
+  }
+
+  handleChange(event){
+    this.props.update(event.target.value);
+  }
+
+  removeOldFocus(){
+    this.props.removeOldFocus();
+  }
+
+  render() {
+    return (
+      <input className="input is-large formTitle" type="text" placeholder="Untitled form"
+        onFocus={this.removeOldFocus.bind(this)}
+        onChange={this.handleChange.bind(this)}/>
+    );
+  }
+}
+
+export class InputHeaderDescription extends Component {
+  constructor(props){
+    super(props);
+  }
+
+  handleChange(event){
+    this.props.update(event.target.value);
+  }
+
+  removeOldFocus(){
+    this.props.removeOldFocus();
+  }
+
+  render() {
+    return (
+      <textarea className="textarea formDescription" placeholder="From description"
+        onFocus={this.removeOldFocus.bind(this)}
+        onChange={this.handleChange.bind(this)}></textarea>
+    );
+  }
+}
+
 
 /**
  * Singleline input
