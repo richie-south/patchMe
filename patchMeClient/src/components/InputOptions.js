@@ -1,6 +1,9 @@
 'use strict';
 import React, { Component } from 'react';
 
+/**
+ * Title name
+ */
 export class InputHeaderTitle extends Component {
   constructor(props){
     super(props);
@@ -23,6 +26,9 @@ export class InputHeaderTitle extends Component {
   }
 }
 
+/**
+ * Title description
+ */
 export class InputHeaderDescription extends Component {
   constructor(props){
     super(props);

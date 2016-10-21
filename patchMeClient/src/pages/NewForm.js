@@ -25,17 +25,23 @@ class NewForm extends Component {
     };
   }
 
-  updateHeader(prop, value){
+  /**
+   * [get data from header inputs]
+   * @param  {[string]} prop [property in state object]
+   * @param  {[string]} value [value form input]
+   */
+  onHeaderInputData(prop, value){
     const newState = update(this.state, { headerInputs: { [prop]: {$set: value} } });
     this.setState(newState);
   }
+
 
   componentDidMount(){
     const id = this.getUniqFormControlId();
     const headerInputs = React.cloneElement(<InputHeader/>  , {
       removeOldFocus: this.removeElementFocus.bind(this),
-      updateDescription: this.updateHeader.bind(this, 'descriptionValue'),
-      updateTitle: this.updateHeader.bind(this, 'titleValue')
+      updateDescription: this.onHeaderInputData.bind(this, 'descriptionValue'),
+      updateTitle: this.onHeaderInputData.bind(this, 'titleValue')
     });
     const newState = update(this.state, {
       headerInputs: { element: {$set: headerInputs} }
@@ -43,6 +49,9 @@ class NewForm extends Component {
     this.setState(newState);
   }
 
+  /**
+   * [toggle display inputOptionsList]
+   */
   toggleDisplayFormOptions(){
     this.removeElementFocus();
     return this.state.displayList ?
@@ -50,6 +59,10 @@ class NewForm extends Component {
       this.setState({ displayList: true });
   }
 
+  /**
+   * [sets focus of element]
+   * @param  {[node]} a [DOM node]
+   */
   setElementFocus(e){
     this.removeElementFocus();
     e.style.boxShadow = '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)';
@@ -58,6 +71,9 @@ class NewForm extends Component {
     this.setState({focusElement: e});
   }
 
+  /**
+   * [removes focus of prev element]
+   */
   removeElementFocus(){
     if(this.state.focusElement){
       this.state.focusElement.style.boxShadow = '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)';
@@ -66,17 +82,30 @@ class NewForm extends Component {
     }
   }
 
-  updateData(id, value){
+  /**
+   * [gets data form inputs and updates element state]
+   * @param  {[string]} id [id of element]
+   * @param  {[string]} value [value form input]
+   */
+  onInputData(id, value){
     const element = getPositionOfElementInArray(this.state.elements, id);
     this.setState({
       elements: update(this.state.elements, {[element._pos]: {description: {$set: value}}})
     });
   }
 
+  /**
+   * [gets uniq id not used by other elements]
+   * @return {[string]}   [uniq id]
+   */
   getUniqFormControlId(){
     return getUniqId(this.state.elements.map(e => e.id));
   }
 
+  /**
+   * [removes element form state elements]
+   * @param  {[string]} id [id of element]
+   */
   removeItem(id){
     const element = getPositionOfElementInArray(this.state.elements, id);
     this.setState({
@@ -84,18 +113,31 @@ class NewForm extends Component {
     });
   }
 
+  /**
+   * [moves element forwards in array and set new element state]
+   * @param  {[string]} id [id of element]
+   */
   moveElementUp(id){
     const element = getPositionOfElementInArray(this.state.elements, id);
     const elements = moveElementForwardInArray(this.state.elements, element);
     this.setState({elements: elements});
   }
 
+  /**
+   * [moves element backwards in array and sets new elements state]
+   * @param  {[string]} id [id of element]
+   */
   moveElementDown(id){
     const element = getPositionOfElementInArray(this.state.elements, id);
     const elements = moveElementBackwardsInArray(this.state.elements, element);
     this.setState({elements: elements});
   }
 
+  /**
+   * [adds new element to sate elements array]
+   * @param  {[react component]} element [type of input]
+   * @param  {[object]} shell [object with type property]
+   */
   addItem(element, shell){
     this.toggleDisplayFormOptions();
     const id = this.getUniqFormControlId();
@@ -104,7 +146,7 @@ class NewForm extends Component {
     props.id = id;
     props.element = React.cloneElement(<FormControl/>, {
       fcId: id,
-      update: this.updateData.bind(this),
+      update: this.onInputData.bind(this),
       remove: this.removeItem.bind(this),
       moveUp: this.moveElementUp.bind(this),
       moveDown: this.moveElementDown.bind(this),
