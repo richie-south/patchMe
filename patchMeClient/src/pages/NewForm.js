@@ -2,11 +2,11 @@
 import React, { Component } from 'react';
 import InputOptionsList from '../components/InputOptionsList';
 import update from 'react-addons-update';
-import FormControl from '../components/FormControl';
+import FormControl, { InputHeader } from '../components/FormControl';
 import FormHeader from '../components/FormHeader';
 import { getUniqId } from '../utils/id';
 import { getPositionOfElementInArray, moveElementForwardInArray, moveElementBackwardsInArray } from '../utils/arrayHelper';
-import { InputHeader, InputShortText, InputLongText } from '../components/InputOptions';
+import { InputShortText, InputLongText } from '../components/InputOptions';
 
 class NewForm extends Component {
   constructor(props){
@@ -14,9 +14,33 @@ class NewForm extends Component {
 
     this.state = {
       displayList: false,
+      headerInputs: {
+        element: null,
+        titleValue: '',
+        descriptionValue: ''
+      },
+
       elements: [],
       focusElement: null
     };
+  }
+
+  updateHeader(prop, value){
+    const newState = update(this.state, { headerInputs: { [prop]: {$set: value} } });
+    this.setState(newState);
+  }
+
+  componentDidMount(){
+    const id = this.getUniqFormControlId();
+    const headerInputs = React.cloneElement(<InputHeader/>  , {
+      removeOldFocus: this.removeElementFocus.bind(this),
+      updateDescription: this.updateHeader.bind(this, 'descriptionValue'),
+      updateTitle: this.updateHeader.bind(this, 'titleValue')
+    });
+    const newState = update(this.state, {
+      headerInputs: { element: {$set: headerInputs} }
+    });
+    this.setState(newState);
   }
 
   toggleDisplayFormOptions(){
@@ -96,8 +120,12 @@ class NewForm extends Component {
       <div>
         <FormHeader />
         <div className="container has-text-centered formContentWrap">
+          {(() => {
+            if(this.state.headerInputs.element !== null){
+              return React.cloneElement(this.state.headerInputs.element);
+            }
+          })()}
 
-          <InputHeader/>
           {(() => {
             if(this.state.elements.length !== 0){
               return (this.state.elements
