@@ -54,9 +54,7 @@ class NewForm extends Component {
    */
   toggleDisplayFormOptions(){
     this.removeElementFocus();
-    return this.state.displayList ?
-      this.setState({ displayList: false }) :
-      this.setState({ displayList: true });
+    this.setState({ displayList: !this.state.displayList });
   }
 
   /**
