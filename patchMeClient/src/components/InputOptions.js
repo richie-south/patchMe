@@ -1,5 +1,27 @@
 'use strict';
 import React, { Component } from 'react';
+import {getFormDescriptionValues, isFormDescriptionValid, getFormDescriptionValuesNoMin} from '../utils/inputValidation';
+import validator from 'validator';
+
+class Wrap extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      isValid: true,
+      message: '',
+      errorClass: ''
+    };
+  }
+
+  handleChange(id, event){
+    const value = event.target.value;
+    this.setState(getFormDescriptionValues(value));
+    if(isFormDescriptionValid(value)){
+      this.props.update(id, validator.escape(value));
+    }
+  }
+}
+
 
 /**
  * Title name
@@ -7,10 +29,19 @@ import React, { Component } from 'react';
 export class InputHeaderTitle extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      isValid: true,
+      message: '',
+      errorClass: ''
+    };
   }
 
   handleChange(event){
-    this.props.update(event.target.value);
+    const value = event.target.value;
+    this.setState(getFormDescriptionValues(value));
+    if(isFormDescriptionValid(value)){
+      this.props.update(validator.escape(value));
+    }
   }
 
   removeOldFocus(){
@@ -18,24 +49,40 @@ export class InputHeaderTitle extends Component {
   }
 
   render() {
+    const classes = 'input is-large formTitle ' + this.state.errorClass;
     return (
-      <input className="input is-large formTitle" type="text" placeholder="Untitled form"
-        onFocus={this.removeOldFocus.bind(this)}
-        onChange={this.handleChange.bind(this)}/>
+      <p>
+        <input className={classes} type="text" placeholder="Untitled form"
+          onFocus={this.removeOldFocus.bind(this)}
+          onChange={this.handleChange.bind(this)}/>
+        {(() => {
+          if(!this.state.isValid){
+            return (<span className="help is-danger">{this.state.message}</span>);
+          }
+        })()}
+      </p>
     );
   }
 }
-
 /**
  * Title description
  */
 export class InputHeaderDescription extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      isValid: true,
+      message: '',
+      errorClass: ''
+    };
   }
 
   handleChange(event){
-    this.props.update(event.target.value);
+    const value = event.target.value;
+    this.setState(getFormDescriptionValuesNoMin(value));
+    if(isFormDescriptionValid(value)){
+      this.props.update(validator.escape(value));
+    }
   }
 
   removeOldFocus(){
@@ -43,19 +90,27 @@ export class InputHeaderDescription extends Component {
   }
 
   render() {
+    const classes = 'textarea formDescription ' + this.state.errorClass;
     return (
-      <textarea className="textarea formDescription" placeholder="From description"
-        onFocus={this.removeOldFocus.bind(this)}
-        onChange={this.handleChange.bind(this)}></textarea>
+      <p>
+        <textarea className={classes} placeholder="From description"
+          onFocus={this.removeOldFocus.bind(this)}
+          onChange={this.handleChange.bind(this)}></textarea>
+        {(() => {
+          if(!this.state.isValid){
+            return (<span className="help is-danger">{this.state.message}</span>);
+          }
+        })()}
+      </p>
+
     );
   }
 }
 
-
 /**
  * Singleline input
  */
-export class InputShortText extends Component {
+export class InputShortText extends Wrap {
   constructor(props){
     super(props);
   }
@@ -64,20 +119,22 @@ export class InputShortText extends Component {
     this.props.onFocus();
   }
 
-  handleChange(id, event){
-    this.props.update(id, event.target.value);
-  }
-
   render() {
+    const classes = 'input is-medium formInput ' + this.state.errorClass;
     return (
       <div className="content has-text-centered">
         <p>
-          <input className="input is-medium formInput"  type="text" placeholder="Question"
+          <input className={classes}  type="text" placeholder="Question"
             onFocus={this.onFocus.bind(this)}
-            onChange={this.handleChange.bind(this, this.props.fcId)}/>
+            onChange={super.handleChange.bind(this, this.props.fcId)}/>
+            {(() => {
+              if(!this.state.isValid){
+                return (<span className="help is-danger">{this.state.message}</span>);
+              }
+            })()}
         </p>
         <p>
-          <input className="input formInput" type="text" placeholder="Short-answer-text" disabled/>
+          <input className="input formInput" type="text" placeholder="Answer-text" disabled/>
         </p>
       </div>
     );
@@ -85,9 +142,77 @@ export class InputShortText extends Component {
 }
 
 /**
+ * Email input
+ */
+export class InputEmail extends Wrap {
+ constructor(props){
+   super(props);
+ }
+
+ onFocus(event){
+   this.props.onFocus();
+ }
+
+ render() {
+   const classes = 'input is-medium formInput ' + this.state.errorClass;
+   return (
+     <div className="content has-text-centered">
+       <p>
+         <input className={classes}  type="text" placeholder="Email question..."
+           onFocus={this.onFocus.bind(this)}
+           onChange={super.handleChange.bind(this, this.props.fcId)}/>
+           {(() => {
+             if(!this.state.isValid){
+               return (<span className="help is-danger">{this.state.message}</span>);
+             }
+           })()}
+       </p>
+       <p>
+         <input className="input formInput" type="text" placeholder="Email-answer" disabled/>
+       </p>
+     </div>
+   );
+ }
+}
+
+/**
+ * Nunber input
+ */
+export class InputNumber extends Wrap {
+ constructor(props){
+   super(props);
+ }
+
+ onFocus(event){
+   this.props.onFocus();
+ }
+
+ render() {
+   const classes = 'input is-medium formInput ' + this.state.errorClass;
+   return (
+     <div className="content has-text-centered">
+       <p>
+         <input className={classes}  type="text" placeholder="Question"
+           onFocus={this.onFocus.bind(this)}
+           onChange={super.handleChange.bind(this, this.props.fcId)}/>
+           {(() => {
+             if(!this.state.isValid){
+               return (<span className="help is-danger">{this.state.message}</span>);
+             }
+           })()}
+       </p>
+       <p>
+         <input className="input formInput" type="number" placeholder="Answer-numbers" disabled/>
+       </p>
+     </div>
+   );
+ }
+}
+
+/**
  * Multiline input
  */
-export class InputLongText extends Component {
+export class InputLongText extends Wrap {
   constructor(props){
     super(props);
   }
@@ -96,17 +221,19 @@ export class InputLongText extends Component {
     this.props.onFocus();
   }
 
-  handleChange(id, event){
-    this.props.update(id, event.target.value);
-  }
-
   render() {
+    const classes = 'input is-medium formInput ' + this.state.errorClass;
     return (
       <div className="content has-text-centered">
         <p>
-          <input className="input is-medium formInput" type="text" placeholder="Question"
+          <input className={classes} type="text" placeholder="Question"
             onFocus={this.onFocus.bind(this)}
-            onChange={this.handleChange.bind(this, this.props.fcId)}/>
+            onChange={super.handleChange.bind(this, this.props.fcId)}/>
+            {(() => {
+              if(!this.state.isValid){
+                return (<span className="help is-danger">{this.state.message}</span>);
+              }
+            })()}
         </p>
         <p>
           <textarea className="textarea formDescription" placeholder="Long-answer-text" disabled></textarea>
@@ -115,5 +242,3 @@ export class InputLongText extends Component {
     );
   }
 }
-
-// TODO: email, input number
