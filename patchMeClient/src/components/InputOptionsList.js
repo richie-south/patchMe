@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import FormControl from './FormControl';
-import { InputShortText, InputLongText } from './InputOptions';
+import { InputShortText, InputLongText, InputEmail, InputNumber } from './InputOptions';
 
 class InputOptionsList extends Component {
   constructor(props){
@@ -17,7 +17,18 @@ class InputOptionsList extends Component {
       longText: {
         description: '',
         type: 'text_block'
+      },
+
+      email: {
+        description: '',
+        type: 'email'
+      },
+
+      number: {
+        description: '',
+        type: 'number'
       }
+
     };
   }
 
@@ -31,7 +42,7 @@ class InputOptionsList extends Component {
     }
 
     return (
-      <table className="table">
+      <table className="table displayTableAnimation">
         <tbody>
           <tr onClick={this.itemPress.bind(this, InputShortText, this.InputOptions.shortText)}>
             <td className="is-icon">
@@ -48,6 +59,22 @@ class InputOptionsList extends Component {
               </a>
             </td>
             <td>Paragraf</td>
+          </tr>
+          <tr onClick={this.itemPress.bind(this, InputEmail, this.InputOptions.email)}>
+            <td className="is-icon">
+              <a>
+                <i className="fa fa-envelope"></i>
+              </a>
+            </td>
+            <td>Email (validates correctness of email address)</td>
+          </tr>
+          <tr onClick={this.itemPress.bind(this, InputNumber, this.InputOptions.number)}>
+            <td className="is-icon">
+              <a>
+                <i className="fa fa-minus"></i>
+              </a>
+            </td>
+            <td>Number (Only numbers)</td>
           </tr>
         </tbody>
       </table>
