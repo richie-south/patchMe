@@ -57,16 +57,13 @@ export class InputHeader extends Component {
           </div>
           <div className="media-content">
             <div className="content has-text-centered">
-              <p>
-                <InputHeaderTitle
-                  removeOldFocus={this.props.removeOldFocus}
-                  update={this.props.updateTitle} />
-              </p>
-              <p>
-                <InputHeaderDescription
-                  removeOldFocus={this.props.removeOldFocus}
-                  update={this.props.updateDescription} />
-              </p>
+              <InputHeaderTitle
+                removeOldFocus={this.props.removeOldFocus}
+                update={this.props.updateTitle} />
+
+              <InputHeaderDescription
+                removeOldFocus={this.props.removeOldFocus}
+                update={this.props.updateDescription} />
             </div>
           </div>
           <div className="media-right">
