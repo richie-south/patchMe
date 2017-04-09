@@ -13,6 +13,8 @@ gem 'sqlite3'
 gem 'oauth'
 gem 'jwt'
 
+gem 'rack-cors', :require => 'rack/cors'
+
 gem 'rails_api_auth', :path => "~/oauth/rails_api_auth"
 gem 'responders', '~> 2.0'
 

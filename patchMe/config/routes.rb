@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :users, only: [:show, :create] do
+  resources :users, only: [:show, :create, :index] do
     resources :forms, only: [:show, :create, :index, :update]
   end
 

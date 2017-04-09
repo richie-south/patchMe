@@ -13,6 +13,17 @@ class Wrap extends Component {
     };
   }
 
+  onFocus(event){
+    this.props.onFocus();
+  }
+
+  componentDidMount(){
+    setTimeout(() => {
+      this.props.onFocus();
+      this._field.focus();
+    }, 0);
+  }
+
   handleChange(id, event){
     const value = event.target.value;
     this.setState(getFormDescriptionValues(value));
@@ -115,17 +126,14 @@ export class InputShortText extends Wrap {
     super(props);
   }
 
-  onFocus(event){
-    this.props.onFocus();
-  }
-
   render() {
     const classes = 'input is-medium formInput ' + this.state.errorClass;
     return (
       <div className="content has-text-centered">
         <p>
           <input className={classes}  type="text" placeholder="Question"
-            onFocus={this.onFocus.bind(this)}
+            ref={(c) => { this._field = c; }}
+            onFocus={super.onFocus.bind(this)}
             onChange={super.handleChange.bind(this, this.props.fcId)}/>
             {(() => {
               if(!this.state.isValid){
@@ -149,17 +157,14 @@ export class InputEmail extends Wrap {
    super(props);
  }
 
- onFocus(event){
-   this.props.onFocus();
- }
-
  render() {
    const classes = 'input is-medium formInput ' + this.state.errorClass;
    return (
      <div className="content has-text-centered">
        <p>
          <input className={classes}  type="text" placeholder="Email question..."
-           onFocus={this.onFocus.bind(this)}
+           ref={(c) => { this._field = c; }}
+           onFocus={super.onFocus.bind(this)}
            onChange={super.handleChange.bind(this, this.props.fcId)}/>
            {(() => {
              if(!this.state.isValid){
@@ -183,17 +188,14 @@ export class InputNumber extends Wrap {
    super(props);
  }
 
- onFocus(event){
-   this.props.onFocus();
- }
-
  render() {
    const classes = 'input is-medium formInput ' + this.state.errorClass;
    return (
      <div className="content has-text-centered">
        <p>
          <input className={classes}  type="text" placeholder="Question"
-           onFocus={this.onFocus.bind(this)}
+           ref={(c) => { this._field = c; }}
+           onFocus={super.onFocus.bind(this)}
            onChange={super.handleChange.bind(this, this.props.fcId)}/>
            {(() => {
              if(!this.state.isValid){
@@ -217,17 +219,14 @@ export class InputLongText extends Wrap {
     super(props);
   }
 
-  onFocus(event){
-    this.props.onFocus();
-  }
-
   render() {
     const classes = 'input is-medium formInput ' + this.state.errorClass;
     return (
       <div className="content has-text-centered">
         <p>
           <input className={classes} type="text" placeholder="Question"
-            onFocus={this.onFocus.bind(this)}
+            ref={(c) => { this._field = c; }}
+            onFocus={super.onFocus.bind(this)}
             onChange={super.handleChange.bind(this, this.props.fcId)}/>
             {(() => {
               if(!this.state.isValid){

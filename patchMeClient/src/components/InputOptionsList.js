@@ -45,41 +45,66 @@ class InputOptionsList extends Component {
       <table className="table displayTableAnimation">
         <tbody>
           <tr onClick={this.itemPress.bind(this, InputShortText, this.InputOptions.shortText)}>
-            <td className="is-icon">
-              <a>
-                <i className="fa fa-align-left"></i>
-              </a>
-            </td>
+
             <td>Short answer</td>
           </tr>
           <tr onClick={this.itemPress.bind(this, InputLongText, this.InputOptions.longText)}>
-            <td className="is-icon">
-              <a>
-                <i className="fa fa-align-left"></i>
-              </a>
-            </td>
+
             <td>Paragraf</td>
           </tr>
           <tr onClick={this.itemPress.bind(this, InputEmail, this.InputOptions.email)}>
-            <td className="is-icon">
-              <a>
-                <i className="fa fa-envelope"></i>
-              </a>
-            </td>
-            <td>Email (validates correctness of email address)</td>
+
+            <td>Email (validates email)</td>
           </tr>
           <tr onClick={this.itemPress.bind(this, InputNumber, this.InputOptions.number)}>
-            <td className="is-icon">
-              <a>
-                <i className="fa fa-minus"></i>
-              </a>
-            </td>
+            
             <td>Number (Only numbers)</td>
           </tr>
         </tbody>
       </table>
+
     );
   }
 }
 
 export default InputOptionsList;
+
+
+/*
+<table className="table displayTableAnimation">
+  <tbody>
+    <tr onClick={this.itemPress.bind(this, InputShortText, this.InputOptions.shortText)}>
+      <td className="is-icon">
+        <a>
+          <i className="fa fa-align-left"></i>
+        </a>
+      </td>
+      <td>Short answer</td>
+    </tr>
+    <tr onClick={this.itemPress.bind(this, InputLongText, this.InputOptions.longText)}>
+      <td className="is-icon">
+        <a>
+          <i className="fa fa-align-left"></i>
+        </a>
+      </td>
+      <td>Paragraf</td>
+    </tr>
+    <tr onClick={this.itemPress.bind(this, InputEmail, this.InputOptions.email)}>
+      <td className="is-icon">
+        <a>
+          <i className="fa fa-envelope"></i>
+        </a>
+      </td>
+      <td>Email (validates email)</td>
+    </tr>
+    <tr onClick={this.itemPress.bind(this, InputNumber, this.InputOptions.number)}>
+      <td className="is-icon">
+        <a>
+          <i className="fa fa-minus"></i>
+        </a>
+      </td>
+      <td>Number (Only numbers)</td>
+    </tr>
+  </tbody>
+</table>
+ */

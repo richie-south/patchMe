@@ -7,11 +7,12 @@ class UsersController < ApplicationController
     if user.nil?
       render json: { errors: "User not found"}, status: :not_found
     else
-      forms = Form.select('*').where(user_id: user.id)
+      forms = Form.find_by(user_id: user.id)
+      # forms = Form.select('*').where(user_id: user.id)
       if forms.nil?
         render json: { errors: "No forms found"}, status: :not_found
       else
-        render json: { forms: forms }, status: :success
+        render json: { forms: forms }, status: 200
       end
     end
   end
@@ -25,7 +26,7 @@ class UsersController < ApplicationController
       if form.nil?
         render json: { errors: "Form not found"}, status: :not_found
       else
-        render json: { form: form }, status: :success
+        render json: { form: form }, status: 200
       end
     end
   end

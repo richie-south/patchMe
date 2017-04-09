@@ -8,11 +8,13 @@
   "dependencies": {
     "co": "^4.6.0",
     "react": "^15.3.2",
+    "react-addons-css-transition-group": "^15.3.2",
     "react-addons-update": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-facebook-login": "^3.3.1",
     "react-router": "^2.8.1",
-    "react-router-component": "^0.36.0"
+    "react-router-component": "^0.36.0",
+    "validator": "^6.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
